@@ -264,7 +264,7 @@ CREATE TABLE `sys_user` (
   `profession_id` int(11) UNSIGNED NOT NULL COMMENT '职称',
   `job_id` int(11) UNSIGNED NOT NULL COMMENT '岗位',
   `dept_id` int(11) UNSIGNED NOT NULL COMMENT '部门',
-  `role_ids` json NOT NULL COMMENT '角色集',
+  `role_ids` text COMMENT '角色集',
   `status` tinyint(1) UNSIGNED NOT NULL DEFAULT '1' COMMENT '0=禁用 1=开启',
   `order_num` int(11) UNSIGNED NOT NULL DEFAULT '0' COMMENT '排序值',
   `remark` varchar(200) NOT NULL DEFAULT '' COMMENT '备注',
