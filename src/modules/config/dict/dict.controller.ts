@@ -51,6 +51,19 @@ export class ConfigDictController {
     return await this.dictService.getConfigDictList();
   }
 
+  @Get('all')
+  @ApiOkResponse({
+    type: wrapResponse({
+      type: ConfigDictRespItemDto,
+      struct: 'list',
+    }),
+  })
+  async all() {
+    return await this.dictService.getConfigDictAll();
+  }
+
+
+
   @Post('delete')
   @ApiOkResponse({
     type: wrapResponse(),

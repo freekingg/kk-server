@@ -82,6 +82,40 @@ export class ConfigDictService extends AbstractService {
     return rows.toList();
   }
 
+  async getConfigDictAll(): Promise<IListRespData<ConfigDictRespItemDto>> {
+    const rawData = await this.entityManager.find<ConfigDictRespItemDto>(
+      SysDictionaryEntity,
+    );
+
+    // 列表转换为tree数据
+    const groupData: any = (data: any[]) => {
+      const groups = {};
+      data.forEach((item) => {
+        const { id, parentId } = item;
+        if (parentId === id) {
+          groups[id] = { ...item, dataList: [] };
+        } else if (groups[parentId]) {
+          groups[parentId].dataList.push({
+            dictLabel: item.name,
+            dictValue: item.value,
+          });
+        } else {
+          const parent = data.find((p) => p.id === parentId);
+          if (parent) {
+            groups[parentId] = {
+              dictType: parent.uniqueKey,
+              dataList: [{ dictLabel: item.name, dictValue: item.value }],
+            };
+          }
+        }
+      });
+      return Object.values(groups);
+    };
+
+    const groupedData = groupData(rawData);
+    return groupedData.toList();
+  }
+
   async deleteConfigDict(id: number): Promise<void> {
     if (id <= this.configService.appConfig.protectSysDictionaryMaxId) {
       throw new ApiFailedException(ErrorEnum.CODE_1203);
