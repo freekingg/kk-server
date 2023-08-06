@@ -3,7 +3,7 @@ import * as yaml from 'js-yaml';
 import { merge } from 'lodash';
 import { join } from 'path';
 
-const YAML_CONFIG_FILENAME = 'bootstrap';
+const YAML_CONFIG_FILENAME = 'config';
 const YAML_CONFIG_SUFFIX = 'yaml';
 
 console.log(process.env.NODE_ENV);
@@ -27,7 +27,8 @@ export default () => {
   const envCfgPath = join(
     cwd,
     `${YAML_CONFIG_FILENAME}-${process.env.NODE_ENV}.${YAML_CONFIG_SUFFIX}`,
-  );
+    );
+    console.log('envCfgPath: ', envCfgPath);
   if (existsSync(envCfgPath)) {
     merge(config, yaml.load(readFileSync(envCfgPath, 'utf8')));
   }
