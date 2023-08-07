@@ -105,7 +105,7 @@ export class SystemDeptService extends AbstractService {
       },
     });
 
-    if (!isEmpty(parent)) {
+    if (isEmpty(parent)) {
       throw new ApiFailedException(ErrorEnum.CODE_1121);
     }
   }
