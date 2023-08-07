@@ -78,6 +78,7 @@ export class UserPermRespItemDto {
   parentId: number;
   router: string;
   type: number;
+  openStyle: number;
   viewPath: string;
 
   constructor(entity: SysPermMenuEntity) {
@@ -90,6 +91,7 @@ export class UserPermRespItemDto {
     this.parentId = entity.parentId;
     this.router = entity.router;
     this.type = entity.type;
+    this.openStyle = entity.openStyle;
     this.viewPath = entity.viewPath;
   }
 }

@@ -93,6 +93,7 @@ export class SysPermMenuItemRespDto {
   router: string;
   type: number;
   viewPath: string;
+  openStyle: number;
 
   constructor(entity: SysPermMenuEntity) {
     this.activeRouter = entity.activeRouter;
@@ -106,5 +107,6 @@ export class SysPermMenuItemRespDto {
     this.router = entity.router;
     this.type = entity.type;
     this.viewPath = entity.viewPath;
+    this.openStyle = entity.openStyle;
   }
 }

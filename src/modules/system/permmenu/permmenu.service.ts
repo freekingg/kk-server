@@ -34,6 +34,7 @@ export class SystemPermMenuService extends AbstractService {
         'name',
         'orderNum',
         'parentId',
+        'openStyle',
         'perms',
         'router',
         'type',

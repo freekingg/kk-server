@@ -29,6 +29,14 @@ export class SysPermMenuEntity extends AbstractEntity {
   })
   type: number;
 
+  @Column({
+    type: 'tinyint',
+    width: 1,
+    default: 0,
+    comment: '打开类型: 0=内部 1=外部',
+  })
+  openStyle: number;
+
   @Column({ type: 'varchar', length: 200, default: '', comment: '图标' })
   icon: string;
 
