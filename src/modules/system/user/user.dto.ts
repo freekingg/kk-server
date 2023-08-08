@@ -88,6 +88,7 @@ export class SysUserAddReqDto {
 
   @NumberField({
     min: 0,
+    required: false,
   })
   professionId: number;
 
