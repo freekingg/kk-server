@@ -21,7 +21,7 @@ export class SysDictionaryEntity extends AbstractEntity {
     unsigned: true,
     default: 1,
     comment:
-      '类型: 1文本 2数字 3数组 4单选 5多选 6下拉 7日期 8时间 9单图 10多图 11单文件 12多文件',
+      '类型: 1=一级 2=二级',
   })
   type: number;
 
@@ -29,8 +29,8 @@ export class SysDictionaryEntity extends AbstractEntity {
     name: 'unique_key',
     type: 'varchar',
     length: 50,
-    unique: true,
-    comment: '唯一标识',
+    default: '',
+    comment: '标识',
   })
   uniqueKey: string;
 

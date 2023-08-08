@@ -44,6 +44,11 @@ export class SysPermMenuAddReqDto {
   orderNum?: number;
 
   @NumberField({
+    required: false,
+  })
+  openStyle?: number;
+
+  @NumberField({
     int: true,
     min: 0,
   })

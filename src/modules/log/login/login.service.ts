@@ -20,7 +20,8 @@ export class LogLoginService extends AbstractService {
         'log.status AS status',
         'log.createTime AS createTime',
       ])
-      .skip((page - 1) * limit)
+      .orderBy("createTime", "DESC")
+      .offset((page - 1) * limit)
       .limit(limit);
 
     const rows = await query.getRawMany<LogLoginRespItemDto>();

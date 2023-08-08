@@ -198,29 +198,6 @@ INSERT INTO `sys_perm_menu` (`id`, `parent_id`, `name`, `router`, `perms`, `type
 -- --------------------------------------------------------
 
 --
--- 表的结构 `sys_profession`
---
-
-CREATE TABLE `sys_profession` (
-  `id` int(11) UNSIGNED NOT NULL COMMENT '编号',
-  `name` varchar(50) NOT NULL COMMENT '职称',
-  `status` tinyint(1) UNSIGNED NOT NULL DEFAULT '1' COMMENT '0=禁用 1=开启',
-  `order_num` int(11) UNSIGNED NOT NULL DEFAULT '0' COMMENT '排序值',
-  `create_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
-  `update_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '更新时间'
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='职称';
-
---
--- 转存表中的数据 `sys_profession`
---
-
-INSERT INTO `sys_profession` (`id`, `name`, `status`, `order_num`, `create_time`, `update_time`) VALUES
-(1, 'CEO', 1, 0, '2022-08-17 05:09:26', '2022-08-17 05:09:26'),
-(2, 'CTO', 1, 0, '2022-08-17 05:09:26', '2022-08-17 05:09:26');
-
--- --------------------------------------------------------
-
---
 -- 表的结构 `sys_role`
 --
 

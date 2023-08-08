@@ -3,12 +3,14 @@ import { ApiOkResponse, ApiTags } from '@nestjs/swagger';
 import {
   ConfigDictAddReqDto,
   ConfigDictDataPageReqDto,
+  ConfigDictPageReqDto,
   ConfigDictIdDto,
   ConfigDictRespItemDto,
   ConfigDictUpdateReqDto,
 } from './dict.dto';
 import { ConfigDictService } from './dict.service';
 import { wrapResponse } from '/@/common/utils/swagger';
+import { PageOptionsDto } from '/@/common/dtos/page-options.dto';
 import { ApiSecurityAuth } from '/@/decorators/swagger.decorator';
 
 @ApiSecurityAuth()
@@ -40,15 +42,15 @@ export class ConfigDictController {
     );
   }
 
-  @Get('list')
+  @Get('page')
   @ApiOkResponse({
     type: wrapResponse({
       type: ConfigDictRespItemDto,
-      struct: 'list',
+      struct: 'page',
     }),
   })
-  async list() {
-    return await this.dictService.getConfigDictList();
+  async page(@Query() query: ConfigDictPageReqDto) {
+    return await this.dictService.getConfigDictPage(query.page, query.limit, query.name);
   }
 
   @Get('all')

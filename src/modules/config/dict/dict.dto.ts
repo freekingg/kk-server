@@ -49,6 +49,7 @@ export class ConfigDictAddReqDto {
   @StringField({
     minLength: 2,
     maxLength: 50,
+    required: false,
   })
   uniqueKey: string;
 
@@ -64,6 +65,11 @@ export class ConfigDictDataPageReqDto extends PageOptionsDto {
   parentId: number;
 }
 
+export class ConfigDictPageReqDto extends PageOptionsDto {
+  @StringField({ required: false })
+  name?: string;
+}
+
 export class ConfigDictIdDto {
   @NumberField({
     int: true,
@@ -72,9 +78,7 @@ export class ConfigDictIdDto {
   id: number;
 }
 
-export class ConfigDictUpdateReqDto extends OmitType(ConfigDictAddReqDto, [
-  'uniqueKey',
-] as const) {
+export class ConfigDictUpdateReqDto extends OmitType(ConfigDictAddReqDto, [] as const) {
   @NumberField({
     int: true,
     min: 1,

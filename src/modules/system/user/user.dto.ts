@@ -86,12 +86,6 @@ export class SysUserAddReqDto {
   })
   orderNum?: number;
 
-  @NumberField({
-    min: 0,
-    required: false,
-  })
-  professionId: number;
-
   @StringField({
     required: false,
   })
@@ -162,6 +156,7 @@ export class SysUserPageItemRespDto {
   profession: IdNameInfoDto;
   job: IdNameInfoDto;
   roles: IdNameInfoDto[];
+  createTime: Date;
 
   constructor(entity: ISysUserPagingQueryItem) {
     this.id = entity.id;
@@ -174,6 +169,7 @@ export class SysUserPageItemRespDto {
     this.remark = entity.remark;
     this.status = entity.status;
     this.username = entity.username;
+    this.createTime = entity.createTime;
     this.dept = new IdNameInfoDto(entity.dept?.id, entity.dept?.name);
     this.profession = new IdNameInfoDto(
       entity.profession?.id,
@@ -196,12 +192,10 @@ export class SysUserRdpjInfoRespDto {
   role: IdNameTreeInfoDto[];
 
   constructor(
-    profs: IdNameInfoDto[],
     depts: IdNameTreeInfoDto[],
     jobs: IdNameInfoDto[],
     roles: IdNameTreeInfoDto[],
   ) {
-    this.profession = profs;
     this.dept = depts;
     this.job = jobs;
     this.role = roles;

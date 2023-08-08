@@ -18,8 +18,8 @@ export interface ISysUserPagingQueryItem {
   remark: string;
   orderNum: number;
   status: number;
-  createTime: string;
-  updateTime: string;
+  createTime: any;
+  updateTime: any;
   job: any;
   dept: any;
   profession: any;

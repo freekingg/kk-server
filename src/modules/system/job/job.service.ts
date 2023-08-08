@@ -47,6 +47,7 @@ export class SystemJobService extends AbstractService {
   }
 
   async updateJob(item: SysJobUpdateReqDto): Promise<void> {
+    console.log(item);
     await this.entityManager.update(
       SysJobEntity,
       { id: item.id },

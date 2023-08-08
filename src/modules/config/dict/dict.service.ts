@@ -8,6 +8,8 @@ import {
   ConfigDictRespItemDto,
   ConfigDictUpdateReqDto,
 } from './dict.dto';
+import {  Like } from 'typeorm';
+
 import { Injectable } from '@nestjs/common';
 import { AbstractService } from '/@/common/abstract.service';
 import { SysDictionaryEntity } from '/@/entities/sys-dictionary.entity';
@@ -32,17 +34,6 @@ export class ConfigDictService extends AbstractService {
       await this.entityManager.findAndCount<ConfigDictRespItemDto>(
         SysDictionaryEntity,
         {
-          select: [
-            'id',
-            'parentId',
-            'name',
-            'orderNum',
-            'remark',
-            'status',
-            'type',
-            'uniqueKey',
-            'value',
-          ],
           where: {
             parentId,
           },
@@ -58,28 +49,25 @@ export class ConfigDictService extends AbstractService {
     });
   }
 
-  async getConfigDictList(): Promise<IListRespData<ConfigDictRespItemDto>> {
-    const rows = await this.entityManager.find<ConfigDictRespItemDto>(
-      SysDictionaryEntity,
-      {
-        select: [
-          'id',
-          'parentId',
-          'name',
-          'orderNum',
-          'remark',
-          'status',
-          'type',
-          'uniqueKey',
-          'value',
-        ],
-        where: {
-          parentId: TREE_ROOT_NODE_ID,
+  async getConfigDictPage(page: number, limit: number, name: string) {
+    const [rows, count] =
+      await this.entityManager.findAndCount<ConfigDictRespItemDto>(
+        SysDictionaryEntity,
+        {
+          where: {
+            type: 1,
+            name: Like(`%${name}%`)
+          },
+          skip: (page - 1) * limit,
+          take: limit,
         },
-      },
-    );
+      );
 
-    return rows.toList();
+    return rows.toPage({
+      page,
+      limit,
+      total: count,
+    });
   }
 
   async getConfigDictAll(): Promise<IListRespData<ConfigDictRespItemDto>> {
@@ -166,8 +154,7 @@ export class ConfigDictService extends AbstractService {
         uniqueKey: item.uniqueKey,
       },
     });
-
-    if (!isEmpty(dict)) {
+    if (!isEmpty(dict) && item.type === 0) {
       throw new ApiFailedException(ErrorEnum.CODE_1202);
     }
 

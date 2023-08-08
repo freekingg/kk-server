@@ -35,14 +35,6 @@ export class SysUserEntity extends AbstractEntity {
   mobile: string;
 
   @Column({
-    name: 'profession_id',
-    type: 'int',
-    unsigned: true,
-    comment: '职称',
-  })
-  professionId: number;
-
-  @Column({
     name: 'job_id',
     type: 'int',
     unsigned: true,

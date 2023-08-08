@@ -13,7 +13,6 @@ import { TREE_ROOT_NODE_ID } from '/@/constants/core';
 import { ErrorEnum } from '/@/constants/errorx';
 import { SysDeptEntity } from '/@/entities/sys-dept.entity';
 import { SysJobEntity } from '/@/entities/sys-job.entity';
-import { SysProfessionEntity } from '/@/entities/sys-profession.entity';
 import { SysRoleEntity } from '/@/entities/sys-role.entity';
 import { SysUserEntity } from '/@/entities/sys-user.entity';
 import { ApiFailedException } from '/@/exceptions/api-failed.exception';
@@ -42,6 +41,7 @@ export class SystemUserService extends AbstractService {
     } else {
       deptIds = [queryDeptId];
     }
+
     const [rows, count] = await this.entityManager
       .createQueryBuilder(SysUserEntity, 'user')
       .leftJoinAndMapOne(
@@ -49,12 +49,6 @@ export class SystemUserService extends AbstractService {
         SysDeptEntity,
         'dept',
         'user.deptId = dept.id',
-      )
-      .leftJoinAndMapOne(
-        'user.profession',
-        SysProfessionEntity,
-        'profession',
-        'user.profession_id = profession.id',
       )
       .leftJoinAndMapOne(
         'user.job',
@@ -68,12 +62,13 @@ export class SystemUserService extends AbstractService {
         'roles',
         'JSON_CONTAINS(user.role_ids, JSON_ARRAY(roles.id))',
       )
-      .where('user.deptId = :deptId', { deptId: queryDeptId })
-      .orWhere('user.deptId IN (:...deptIds)', { deptIds: deptIds })
+      // .where('user.deptId = :deptId', { deptId: queryDeptId })
+      // .orWhere('user.deptId IN (:...deptIds)', { deptIds: deptIds })
+      // .andWhere('user.id != :id', { id: 1 })
+      .where('user.id != :id', { id: 1 })
       .skip((page - 1) * limit)
-      .limit(limit)
+      .take(limit)
       .getManyAndCount();
-    console.log(rows);
     return rows
       .map((e: any) => new SysUserPageItemRespDto(e))
       .toPage({
@@ -112,10 +107,6 @@ export class SystemUserService extends AbstractService {
       throw new Error(`User ${edituid} illegally obtaining root info`);
     }
 
-    const profs = await this.entityManager.find(SysProfessionEntity, {
-      select: ['id', 'name'],
-    });
-
     const depts = await this.entityManager.find(SysDeptEntity, {
       select: ['id', 'name', 'parentId'],
     });
@@ -128,15 +119,11 @@ export class SystemUserService extends AbstractService {
       select: ['id', 'parentId', 'name'],
     });
 
-    return new SysUserRdpjInfoRespDto(profs, depts, jobs, allRoles);
+    return new SysUserRdpjInfoRespDto(depts, jobs, allRoles);
   }
 
   async addUser(item: SysUserAddReqDto): Promise<void> {
-    await this.checkJobOrDeptOrProfExists(
-      item.jobId,
-      item.deptId,
-      item.professionId,
-    );
+    await this.checkJobOrDeptOrProfExists(item.jobId, item.deptId);
 
     // 创建用户
     await this.entityManager.insert(SysUserEntity, {
@@ -147,11 +134,7 @@ export class SystemUserService extends AbstractService {
   }
 
   async updateUser(item: SysUserUpdateReqDto): Promise<void> {
-    await this.checkJobOrDeptOrProfExists(
-      item.jobId,
-      item.deptId,
-      item.professionId,
-    );
+    await this.checkJobOrDeptOrProfExists(item.jobId, item.deptId);
 
     // 更新用户
     await this.entityManager.update(
@@ -170,7 +153,6 @@ export class SystemUserService extends AbstractService {
   private async checkJobOrDeptOrProfExists(
     jobId: number,
     deptId: number,
-    profId: number,
   ): Promise<void> {
     const jobInfo = await this.entityManager.findOne(SysJobEntity, {
       select: ['id'],
@@ -181,17 +163,6 @@ export class SystemUserService extends AbstractService {
 
     if (isEmpty(jobInfo)) {
       throw new ApiFailedException(ErrorEnum.CODE_1102);
-    }
-
-    const profInfo = await this.entityManager.findOne(SysProfessionEntity, {
-      select: ['id'],
-      where: {
-        id: profId,
-      },
-    });
-
-    if (isEmpty(profInfo)) {
-      throw new ApiFailedException(ErrorEnum.CODE_1103);
     }
 
     const deptInfo = await this.entityManager.findOne(SysDeptEntity, {
