@@ -1,4 +1,3 @@
-import { DemoModule } from './modules/demo/demo.module';
 import './polyfill';
 
 import { Module } from '@nestjs/common';
@@ -11,6 +10,7 @@ import { UserModule } from './modules/user/user.module';
 import { SystemModule } from './modules/system/system.module';
 import { LogModule } from './modules/log/log.module';
 import { ConfigModule } from './modules/config/config.module';
+import { DemoModule } from './modules/demo/demo.module';
 import configuration from './configuration';
 
 @Module({
