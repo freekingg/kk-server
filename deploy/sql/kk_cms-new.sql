@@ -11,7 +11,7 @@
  Target Server Version : 80029
  File Encoding         : 65001
 
- Date: 06/09/2023 19:19:17
+ Date: 08/09/2023 14:10:45
 */
 
 SET NAMES utf8mb4;
@@ -89,10 +89,10 @@ INSERT INTO `sys_dictionary` VALUES (3, 1, '更新个人密码', 2, 'sys_ch_pwd'
 INSERT INTO `sys_dictionary` VALUES (4, 1, '更新个人资料', 2, 'sys_userinfo', '1', 1, 0, '', '2022-08-25 07:28:36.000000', '2023-08-08 16:19:00.000000');
 INSERT INTO `sys_dictionary` VALUES (6, 0, 'test1', 1, 'test', '', 1, 0, '', '2023-08-08 15:54:58.473360', '2023-08-08 15:55:08.000000');
 INSERT INTO `sys_dictionary` VALUES (8, 0, '岗位状态', 1, 'job_status', '', 1, 0, '', '2023-08-08 19:18:50.418009', '2023-08-08 19:26:02.000000');
-INSERT INTO `sys_dictionary` VALUES (9, 8, '禁用', 2, '', '0', 1, 0, '', '2023-08-08 19:19:16.641804', '2023-08-08 19:19:16.641804');
-INSERT INTO `sys_dictionary` VALUES (10, 8, '开启', 2, '', '1', 1, 0, '', '2023-08-08 19:19:27.618391', '2023-08-08 19:19:27.618391');
+INSERT INTO `sys_dictionary` VALUES (9, 8, '禁用', 2, '8-0', '0', 1, 0, '', '2023-08-08 19:19:16.641804', '2023-09-08 14:10:06.503180');
+INSERT INTO `sys_dictionary` VALUES (10, 8, '开启', 2, '8-1', '1', 1, 0, '', '2023-08-08 19:19:27.618391', '2023-09-08 14:10:10.767274');
 INSERT INTO `sys_dictionary` VALUES (11, 0, '性别', 1, 'gender', '', 1, 0, '', '2023-09-06 15:36:29.313821', '2023-09-06 15:36:29.313821');
-INSERT INTO `sys_dictionary` VALUES (12, 11, '男性', 2, '', '0', 1, 0, '', '2023-09-06 15:36:51.258962', '2023-09-06 15:36:51.258962');
+INSERT INTO `sys_dictionary` VALUES (12, 11, '男性', 2, '11-0', '0', 1, 0, '', '2023-09-06 15:36:51.258962', '2023-09-08 14:10:18.655701');
 COMMIT;
 
 -- ----------------------------
@@ -132,7 +132,7 @@ CREATE TABLE `sys_log` (
   `create_time` timestamp(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6),
   `update_time` timestamp(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6) ON UPDATE CURRENT_TIMESTAMP(6),
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=45 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci COMMENT='系统日志';
+) ENGINE=InnoDB AUTO_INCREMENT=46 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci COMMENT='系统日志';
 
 -- ----------------------------
 -- Records of sys_log
@@ -182,6 +182,7 @@ INSERT INTO `sys_log` VALUES (41, 1, '127.0.0.1', '/admin/user/login', 1, '{\"ac
 INSERT INTO `sys_log` VALUES (42, 1, '127.0.0.1', '/admin/user/login', 1, '{\"account\":\"admin\",\"verifyCode\":\"9960\",\"captchaId\":\"PDAe6QKKgE\"}', 1, '2023-09-06 18:15:33.406849', '2023-09-06 18:15:33.406849');
 INSERT INTO `sys_log` VALUES (43, 1, '127.0.0.1', '/admin/user/login', 1, '{\"account\":\"admin\",\"verifyCode\":\"3724\",\"captchaId\":\"92lWgXVwkm\"}', 1, '2023-09-06 18:15:55.810574', '2023-09-06 18:15:55.810574');
 INSERT INTO `sys_log` VALUES (44, 1, '127.0.0.1', '/admin/user/login', 1, '{\"account\":\"admin\",\"verifyCode\":\"1881\",\"captchaId\":\"oqSlVl04nU\"}', 1, '2023-09-06 19:07:08.264838', '2023-09-06 19:07:08.264838');
+INSERT INTO `sys_log` VALUES (45, 1, '127.0.0.1', '/admin/user/login', 1, '{\"account\":\"admin\",\"verifyCode\":\"6375\",\"captchaId\":\"wJdsv0Vxlb\"}', 1, '2023-09-08 13:54:56.345190', '2023-09-08 13:54:56.345190');
 COMMIT;
 
 -- ----------------------------
